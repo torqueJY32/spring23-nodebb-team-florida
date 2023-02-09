@@ -16,17 +16,10 @@
 
 
 
-    <!-- TODO: this is the place to introduce the button for reading list -->
 
+    <!-- The following line import the reading-list button -->
+    <!-- IMPORT partials/topic/reading-list.tpl -->
 
-    <!-- IF loggedIn -->
-    <!-- button component="topic/mark-unread" class="btn btn-sm btn-default" title="[[topic:mark_unread]]" -->
-    <button>
-        <i class="fa fa-fw fa-inbox"></i><span class="visible-sm-inline visible-md-inline visible-lg-inline"></span>
-    </button>
-    <!-- ENDIF loggedIn -->
-
-    <!-- TODO: this is the place to introduce the button for reading list -->
 
 
 
