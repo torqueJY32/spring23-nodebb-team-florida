@@ -9,6 +9,7 @@
 <li><a component="topic/move-posts" href="#"><i class="fa fa-fw fa-arrows"></i> [[topic:thread_tools.move-posts]]</a></li>
 {{{ end }}}
 <li><a component="topic/mark-unread-for-all" href="#"><i class="fa fa-fw fa-inbox"></i> [[topic:thread_tools.markAsUnreadForAll]]</a></li>
+<li><a href="#"><i class="fa fa-fw fa-file-text-o"></i> Add to Reading List for All </a></li>
 <li class="divider"></li>
 <!-- ENDIF privileges.editable -->
 
