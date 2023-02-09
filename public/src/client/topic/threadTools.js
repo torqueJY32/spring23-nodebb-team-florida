@@ -98,6 +98,13 @@ define('forum/topic/threadTools', [
             return false;
         });
 
+        
+        topicContainer.on('click', '[component="topic/reading-all"]', function () {
+            alerts.success('You clicked reading-all button! In src/client/topic/threadtools.js');
+            return false;
+        });
+
+
         topicContainer.on('click', '[component="topic/move"]', function () {
             require(['forum/topic/move'], function (move) {
                 move.init([tid], ajaxify.data.cid);
