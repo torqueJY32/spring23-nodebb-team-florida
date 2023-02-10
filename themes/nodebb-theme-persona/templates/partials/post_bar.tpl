@@ -13,6 +13,16 @@
 
     <!-- IMPORT partials/topic/sort.tpl -->
 
+
+
+
+
+    <!-- The following line import the reading-list button -->
+    <!-- IMPORT partials/topic/reading-list.tpl -->
+
+
+
+
     <div class="inline-block">
     <!-- IMPORT partials/thread_tools.tpl -->
     </div>
