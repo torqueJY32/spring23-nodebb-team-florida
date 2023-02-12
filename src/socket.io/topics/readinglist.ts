@@ -28,6 +28,8 @@ module.exports = function (SocketTopics) {
             if (!isAdmin && !isMod) {
                 throw new Error('[[error:no-privileges]]');
             }
+            console.log("Called here! At reading list of src/socket.io/topics/readinglist.ts");
+            await topics.testFunctionInReadingListOfTopics(tid);
             await topics.markAsUnreadForAll(tid);
             await topics.updateRecent(tid, now);
             await db.sortedSetAdd(`cid:${topicData.cid}:tids:lastposttime`, now, tid);

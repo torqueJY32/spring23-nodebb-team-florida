@@ -102,16 +102,18 @@ define('forum/topic/threadTools', [
 
         topicContainer.on('click', '[component="topic/reading-all"]', function () {
             alerts.success('You clicked reading-all button! In src/client/topic/threadtools.js');
+            console.log('You clicked reading-all button! In src/client/topic/threadtools.js');
+            console.log('Continue');
 
             socket.emit('topics.readingForAll', [tid], function (err) {
                 if (err) {
-                    console.log("Some error happened? at reading-all");
+                    console.log('Some error happened? at reading-all');
                     return alerts.error(err);
                 }
                 alerts.success('[[topic:markAsUnreadForAll.success]]');
-                console.log("Completed reading-all function successfully");
-
+                console.log('Completed reading-all function successfully');
             });
+            console.log('In src/client/topic/threadtools.js function returning');
             return false;
         });
 
