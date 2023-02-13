@@ -33,6 +33,7 @@ module.exports = function (SocketTopics) {
                     throw new Error('[[error:no-privileges]]');
                 }
                 console.log("Called here! At reading list of src/socket.io/topics/readinglist.ts");
+                console.log("Next will go to src/topics/readinglist.js. NOte this is not translated yet");
                 yield topics.testFunctionInReadingListOfTopics(tid);
                 yield topics.markAsUnreadForAll(tid);
                 yield topics.updateRecent(tid, now);

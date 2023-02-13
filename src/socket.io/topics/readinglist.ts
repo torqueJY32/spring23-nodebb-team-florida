@@ -29,7 +29,9 @@ module.exports = function (SocketTopics) {
                 throw new Error('[[error:no-privileges]]');
             }
             console.log("Called here! At reading list of src/socket.io/topics/readinglist.ts");
+            console.log("Next will go to src/topics/readinglist.js. NOte this is not translated yet");
             await topics.testFunctionInReadingListOfTopics(tid);
+
             await topics.markAsUnreadForAll(tid);
             await topics.updateRecent(tid, now);
             await db.sortedSetAdd(`cid:${topicData.cid}:tids:lastposttime`, now, tid);
