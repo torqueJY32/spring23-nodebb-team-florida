@@ -87,7 +87,7 @@ define('forum/topic/threadTools', [
         });
 
         topicContainer.on('click', '[component="topic/mark-unread-for-all"]', function () {
-            alerts.success("You have reached this function, at src/client/topic/threadTools");
+            alerts.success('You have reached this function, at src/client/topic/threadTools');
             const btn = $(this);
             socket.emit('topics.markAsUnreadForAll', [tid], function (err) {
                 if (err) {
@@ -105,16 +105,14 @@ define('forum/topic/threadTools', [
 
             socket.emit('topics.readingForAll', [tid], function (err) {
                 if (err) {
-                    console.log("Some error happened? at reading-all");
+                    console.log('Some error happened? at reading-all');
                     return alerts.error(err);
                 }
                 alerts.success('[[topic:markAsUnreadForAll.success]]');
-                console.log("Completed reading-all function successfully");
-
+                console.log('Completed reading-all function successfully');
             });
             return false;
         });
-
 
         topicContainer.on('click', '[component="topic/move"]', function () {
             require(['forum/topic/move'], function (move) {
