@@ -1,3 +1,5 @@
+// Referenced @cmay20’s TypeScript translation from P1: https://github.com/CMU-313/NodeBB/pull/163/files
+
 import db from '../database';
 
  import meta from '../meta';
