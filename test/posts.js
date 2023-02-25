@@ -961,6 +961,7 @@ describe('Post\'s', () => {
             assert.equal(err.message, '[[error:no-user]]');
             done();
         });
+        done();
     });
 
     describe('post queue', () => {
