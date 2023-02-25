@@ -87,7 +87,7 @@
         <a component="post/endorse" role="menuitem" tabindex="-1" href="#" data-endorsed="{posts.endorsed}">
             <span class="menu-icon">
                 <i component="post/endorse/on" class="fa fa-fw fa-check <!-- IF !posts.endorsed -->hidden<!-- ENDIF !posts.endorsed -->"></i>
-                <i component="post/endorse/off" class="fa fa-fw fa-question <!-- IF posts.endorsed -->hidden<!-- ENDIF posts.endorsed -->"></i>
+                <i component="post/endorse/off" class="fa fa-fw fa-circle <!-- IF posts.endorsed -->hidden<!-- ENDIF posts.endorsed -->"></i>
             </span>
             <span class="bookmark-text">Endorse and Unendorse</span>
         </a>
