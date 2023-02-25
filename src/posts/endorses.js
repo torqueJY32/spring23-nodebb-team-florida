@@ -11,20 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-/* eslint-disable */
 const database_1 = __importDefault(require("../database"));
 const plugins_1 = __importDefault(require("../plugins"));
 module.exports = function (Posts) {
-    Posts.endorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('endorse', pid, uid);
-        });
-    };
-    Posts.unendorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('unendorse', pid, uid);
-        });
-    };
     function toggleEndorse(type, pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
@@ -43,7 +32,8 @@ module.exports = function (Posts) {
             if (!isEndorsing && !hasEndorsed) {
                 throw new Error('[[error:already-unendorsed]]');
             }
-            postData.endorses = yield database_1.default.setCount(`pid:${pid}:users_endorsed`);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
             console.log('before that, num for endorse is');
             console.log(postData.endorses);
             // if (isEndorsing ) {
@@ -51,8 +41,10 @@ module.exports = function (Posts) {
             // } else {
             //     await db.sortedSetRemove(`uid:${uid}:endorses`, pid);
             // }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             yield database_1.default[isEndorsing ? 'setAdd' : 'setRemove'](`pid:${pid}:users_endorsed`, 1);
-            postData.endorses = yield database_1.default.setCount(`pid:${pid}:users_endorsed`);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
             console.log('after that, num for endorse is');
             console.log(postData.endorses);
             // if (isEndorsing ) {
@@ -61,7 +53,7 @@ module.exports = function (Posts) {
             //     await db.sortedSetRemove(`uid:${uid}:endorses`, pid);
             // }
             yield Posts.setPostField(pid, 'endorses', postData.endorses);
-            plugins_1.default.hooks.fire(`action:post.${type}`, {
+            yield plugins_1.default.hooks.fire(`action:post.${type}`, {
                 pid: pid,
                 uid: uid,
                 owner: postData.uid,
@@ -73,12 +65,22 @@ module.exports = function (Posts) {
             };
         });
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    Posts.endorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('endorse', pid, uid);
+        });
+    };
+    Posts.unendorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('unendorse', pid, uid);
+        });
+    };
     Posts.hasEndorsed = function (pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
                 return Array.isArray(pid) ? pid.map(() => false) : false;
             }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const size = yield database_1.default.setCount(`pid:${pid}:users_endorsed`);
             return size > 0;
             // if (Array.isArray(pid)) {

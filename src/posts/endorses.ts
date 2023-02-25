@@ -1,17 +1,18 @@
-/* eslint-disable */
 import db from '../database';
 import plugins from '../plugins';
 
-export = function (Posts) {
-    Posts.endorse = async function (pid: string, uid: string) {
-        return await toggleEndorse('endorse', pid, uid);
-    };
+interface PostObject {
+    endorse : (pid:number, uid:string) => Promise<{ post: PostObject; isEndorsed: boolean; }>;
+    endorses : number;
+    uid : string
+    unendorse : (pid: number, uid: string) => Promise<{ post: PostObject; isEndorsed: boolean; }>;
+    getPostFields: (pid:number, fields:string[]) => Promise<PostObject>;
+    hasEndorsed : (pid: number, uid: string) => Promise<boolean | boolean[]>;
+    setPostField: (pid:number, field:string, value:number) => Promise<void>;
+}
 
-    Posts.unendorse = async function (pid: string, uid: string) {
-        return await toggleEndorse('unendorse', pid, uid);
-    };
-
-    async function toggleEndorse(type: string, pid: string, uid: string) {
+export = function (Posts: PostObject) {
+    async function toggleEndorse(type: string, pid: number, uid: string) {
         if (parseInt(uid, 10) <= 0) {
             throw new Error('[[error:not-logged-in]]');
         }
@@ -22,7 +23,6 @@ export = function (Posts) {
             Posts.getPostFields(pid, ['pid', 'uid']),
             Posts.hasEndorsed(pid, uid),
         ]);
-        
         console.log('Current Status for endorse is');
         console.log(hasEndorsed);
 
@@ -34,8 +34,8 @@ export = function (Posts) {
             throw new Error('[[error:already-unendorsed]]');
         }
 
-
-        postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`) as number;
         console.log('before that, num for endorse is');
         console.log(postData.endorses);
 
@@ -45,8 +45,10 @@ export = function (Posts) {
         //     await db.sortedSetRemove(`uid:${uid}:endorses`, pid);
         // }
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         await db[isEndorsing ? 'setAdd' : 'setRemove'](`pid:${pid}:users_endorsed`, 1);
-        postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`) as number;
 
         console.log('after that, num for endorse is');
         console.log(postData.endorses);
@@ -60,7 +62,7 @@ export = function (Posts) {
 
         await Posts.setPostField(pid, 'endorses', postData.endorses);
 
-        plugins.hooks.fire(`action:post.${type}`, {
+        await plugins.hooks.fire(`action:post.${type}`, {
             pid: pid,
             uid: uid,
             owner: postData.uid,
@@ -73,13 +75,21 @@ export = function (Posts) {
         };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    Posts.hasEndorsed = async function (pid: string, uid: string): Promise<boolean | boolean[]> {
+    Posts.endorse = async function (pid: number, uid: string) {
+        return await toggleEndorse('endorse', pid, uid);
+    };
+
+    Posts.unendorse = async function (pid: number, uid: string) {
+        return await toggleEndorse('unendorse', pid, uid);
+    };
+
+    Posts.hasEndorsed = async function (pid: number, uid: string): Promise<boolean | boolean[]> {
         if (parseInt(uid, 10) <= 0) {
             return Array.isArray(pid) ? pid.map(() => false) : false;
         }
 
-        const size = await db.setCount(`pid:${pid}:users_endorsed`);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        const size: number = await db.setCount(`pid:${pid}:users_endorsed`) as number;
         return size > 0;
 
         // if (Array.isArray(pid)) {
@@ -89,5 +99,3 @@ export = function (Posts) {
         // return await db.isSetMember(`pid:${pid}:users_endorsed`, uid);
     };
 };
-
-
