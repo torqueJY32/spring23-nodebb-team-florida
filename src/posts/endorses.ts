@@ -1,23 +1,22 @@
-'use strict';
+/* eslint-disable */
+import db from '../database';
+import plugins from '../plugins';
 
-const db = require('../database');
-const plugins = require('../plugins');
-
-module.exports = function (Posts) {
-    Posts.endorse = async function (pid, uid) {
+export = function (Posts) {
+    Posts.endorse = async function (pid: string, uid: string) {
         return await toggleEndorse('endorse', pid, uid);
     };
 
-    Posts.unendorse = async function (pid, uid) {
+    Posts.unendorse = async function (pid: string, uid: string) {
         return await toggleEndorse('unendorse', pid, uid);
     };
 
-    async function toggleEndorse(type, pid, uid) {
+    async function toggleEndorse(type: string, pid: string, uid: string) {
         if (parseInt(uid, 10) <= 0) {
             throw new Error('[[error:not-logged-in]]');
         }
 
-        const isEndorsing = type === 'endorse';
+        const isEndorsing: boolean = type === 'endorse';
 
         const [postData, hasEndorsed] = await Promise.all([
             Posts.getPostFields(pid, ['pid', 'uid']),
@@ -74,13 +73,13 @@ module.exports = function (Posts) {
         };
     }
 
-    Posts.hasEndorsed = async function (pid, uid) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    Posts.hasEndorsed = async function (pid: string, uid: string): Promise<boolean | boolean[]> {
         if (parseInt(uid, 10) <= 0) {
             return Array.isArray(pid) ? pid.map(() => false) : false;
         }
 
         const size = await db.setCount(`pid:${pid}:users_endorsed`);
-        
         return size > 0;
 
         // if (Array.isArray(pid)) {
@@ -90,3 +89,5 @@ module.exports = function (Posts) {
         // return await db.isSetMember(`pid:${pid}:users_endorsed`, uid);
     };
 };
+
+
