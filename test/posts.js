@@ -539,6 +539,7 @@ describe('Post\'s', () => {
             assert.strictEqual(data.topic.tags[0].value, 'edited');
             const res = await db.getObject(`post:${pid}`);
             assert(!res.hasOwnProperty('bookmarks'));
+            assert(!res.hasOwnProperty('endorses'));
         });
 
         it('should disallow post editing for new users if post was made past the threshold for editing', async () => {
