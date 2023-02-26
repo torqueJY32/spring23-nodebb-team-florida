@@ -13,6 +13,14 @@ interface PostObject {
 }
 
 export = function (Posts: PostObject) {
+    Posts.endorse = async function (pid: number, uid: string) {
+        return await toggleEndorse('endorse', pid, uid);
+    };
+
+    Posts.unendorse = async function (pid: number, uid: string) {
+        return await toggleEndorse('unendorse', pid, uid);
+    };
+
     async function toggleEndorse(type: string, pid: number, uid: string) {
         if (parseInt(uid, 10) <= 0) {
             throw new Error('[[error:not-logged-in]]');
@@ -24,8 +32,8 @@ export = function (Posts: PostObject) {
             Posts.getPostFields(pid, ['pid', 'uid']),
             Posts.hasEndorsed(pid, uid),
         ]);
-        console.log('Current Status for endorse is');
-        console.log(hasEndorsed);
+        // console.log('Current Status for endorse is');
+        // console.log(hasEndorsed);
 
         if (isEndorsing && hasEndorsed) {
             throw new Error('[[error:already-endorsed]]');
@@ -54,9 +62,7 @@ export = function (Posts: PostObject) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`) as number;
 
-
-
-        await Posts.setPostField(pid, 'endorses', postData.endorses);
+        // await Posts.setPostField(pid, 'endorses', postData.endorses);
 
         await plugins.hooks.fire(`action:post.${type}`, {
             pid: pid,
@@ -71,13 +77,7 @@ export = function (Posts: PostObject) {
         };
     }
 
-    Posts.endorse = async function (pid: number, uid: string) {
-        return await toggleEndorse('endorse', pid, uid);
-    };
 
-    Posts.unendorse = async function (pid: number, uid: string) {
-        return await toggleEndorse('unendorse', pid, uid);
-    };
 
     Posts.hasEndorsed = async function (pid: number, uid: string): Promise<boolean | boolean[]> {
         if (parseInt(uid, 10) <= 0) {

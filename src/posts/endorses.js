@@ -14,6 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const database_1 = __importDefault(require("../database"));
 const plugins_1 = __importDefault(require("../plugins"));
 module.exports = function (Posts) {
+    Posts.endorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('endorse', pid, uid);
+        });
+    };
+    Posts.unendorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('unendorse', pid, uid);
+        });
+    };
     function toggleEndorse(type, pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
@@ -24,8 +34,8 @@ module.exports = function (Posts) {
                 Posts.getPostFields(pid, ['pid', 'uid']),
                 Posts.hasEndorsed(pid, uid),
             ]);
-            console.log('Current Status for endorse is');
-            console.log(hasEndorsed);
+            // console.log('Current Status for endorse is');
+            // console.log(hasEndorsed);
             if (isEndorsing && hasEndorsed) {
                 throw new Error('[[error:already-endorsed]]');
             }
@@ -46,7 +56,7 @@ module.exports = function (Posts) {
             yield database_1.default[isEndorsing ? 'setAdd' : 'setRemove'](`pid:${pid}:users_endorsed`, 1);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
-            yield Posts.setPostField(pid, 'endorses', postData.endorses);
+            // await Posts.setPostField(pid, 'endorses', postData.endorses);
             yield plugins_1.default.hooks.fire(`action:post.${type}`, {
                 pid: pid,
                 uid: uid,
@@ -59,16 +69,6 @@ module.exports = function (Posts) {
             };
         });
     }
-    Posts.endorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('endorse', pid, uid);
-        });
-    };
-    Posts.unendorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('unendorse', pid, uid);
-        });
-    };
     Posts.hasEndorsed = function (pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
