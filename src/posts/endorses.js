@@ -14,16 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const database_1 = __importDefault(require("../database"));
 const plugins_1 = __importDefault(require("../plugins"));
 module.exports = function (Posts) {
-    Posts.endorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('endorse', pid, uid);
-        });
-    };
-    Posts.unendorse = function (pid, uid) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield toggleEndorse('unendorse', pid, uid);
-        });
-    };
     function toggleEndorse(type, pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
@@ -44,9 +34,8 @@ module.exports = function (Posts) {
             }
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
-            // In bookmark, the following lines are used to indicate that this user
-            // hasbookmarked the post. In here, we are only looking for if there are people
-            // endorse the post, so the following lines are removed.
+            // console.log('before that, num for endorse is');
+            // console.log(postData.endorses);
             // if (isEndorsing ) {
             //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);
             // } else {
@@ -56,7 +45,14 @@ module.exports = function (Posts) {
             yield database_1.default[isEndorsing ? 'setAdd' : 'setRemove'](`pid:${pid}:users_endorsed`, 1);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
-            // await Posts.setPostField(pid, 'endorses', postData.endorses);
+            // console.log('after that, num for endorse is');
+            // console.log(postData.endorses);
+            // if (isEndorsing ) {
+            //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);
+            // } else {
+            //     await db.sortedSetRemove(`uid:${uid}:endorses`, pid);
+            // }
+            yield Posts.setPostField(pid, 'endorses', postData.endorses);
             yield plugins_1.default.hooks.fire(`action:post.${type}`, {
                 pid: pid,
                 uid: uid,
@@ -69,6 +65,16 @@ module.exports = function (Posts) {
             };
         });
     }
+    Posts.endorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('endorse', pid, uid);
+        });
+    };
+    Posts.unendorse = function (pid, uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield toggleEndorse('unendorse', pid, uid);
+        });
+    };
     Posts.hasEndorsed = function (pid, uid) {
         return __awaiter(this, void 0, void 0, function* () {
             if (parseInt(uid, 10) <= 0) {
@@ -77,8 +83,6 @@ module.exports = function (Posts) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             const size = yield database_1.default.setCount(`pid:${pid}:users_endorsed`);
             return size > 0;
-            // We will only use the size of the entries in the data base as the
-            // indicator of if the post has been endorsed or not
             // if (Array.isArray(pid)) {
             //     const sets = pid.map(pid => `pid:${pid}:users_endorsed`);
             //     return await db.isMemberOfSets(sets, uid);
