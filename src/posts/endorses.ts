@@ -23,8 +23,8 @@ export = function (Posts: PostObject) {
             Posts.getPostFields(pid, ['pid', 'uid']),
             Posts.hasEndorsed(pid, uid),
         ]);
-        console.log('Current Status for endorse is');
-        console.log(hasEndorsed);
+        // console.log('Current Status for endorse is');
+        // console.log(hasEndorsed);
 
         if (isEndorsing && hasEndorsed) {
             throw new Error('[[error:already-endorsed]]');
@@ -36,8 +36,8 @@ export = function (Posts: PostObject) {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`) as number;
-        console.log('before that, num for endorse is');
-        console.log(postData.endorses);
+        // console.log('before that, num for endorse is');
+        // console.log(postData.endorses);
 
         // if (isEndorsing ) {
         //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);
@@ -50,8 +50,8 @@ export = function (Posts: PostObject) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         postData.endorses = await db.setCount(`pid:${pid}:users_endorsed`) as number;
 
-        console.log('after that, num for endorse is');
-        console.log(postData.endorses);
+        // console.log('after that, num for endorse is');
+        // console.log(postData.endorses);
 
         // if (isEndorsing ) {
         //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);

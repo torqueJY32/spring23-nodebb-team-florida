@@ -24,8 +24,8 @@ module.exports = function (Posts) {
                 Posts.getPostFields(pid, ['pid', 'uid']),
                 Posts.hasEndorsed(pid, uid),
             ]);
-            console.log('Current Status for endorse is');
-            console.log(hasEndorsed);
+            // console.log('Current Status for endorse is');
+            // console.log(hasEndorsed);
             if (isEndorsing && hasEndorsed) {
                 throw new Error('[[error:already-endorsed]]');
             }
@@ -34,8 +34,8 @@ module.exports = function (Posts) {
             }
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
-            console.log('before that, num for endorse is');
-            console.log(postData.endorses);
+            // console.log('before that, num for endorse is');
+            // console.log(postData.endorses);
             // if (isEndorsing ) {
             //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);
             // } else {
@@ -45,8 +45,8 @@ module.exports = function (Posts) {
             yield database_1.default[isEndorsing ? 'setAdd' : 'setRemove'](`pid:${pid}:users_endorsed`, 1);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             postData.endorses = (yield database_1.default.setCount(`pid:${pid}:users_endorsed`));
-            console.log('after that, num for endorse is');
-            console.log(postData.endorses);
+            // console.log('after that, num for endorse is');
+            // console.log(postData.endorses);
             // if (isEndorsing ) {
             //     await db.sortedSetAdd(`uid:${uid}:endorses`, Date.now(), pid);
             // } else {
