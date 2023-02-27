@@ -314,7 +314,7 @@ describe('Post\'s', () => {
             const data = await apiPosts.unendorse({ uid: voterUid }, { pid: postData.pid, room_id: `topic_${postData.tid}` });
             assert.equal(data.isEndorsed, false);
             const hasEndorsed = await posts.hasEndorsed([postData.pid], voterUid);
-            assert.equal(hasEndorsed[0], false);
+            assert.equal(hasEndorsed, false);
         });
     });
 
