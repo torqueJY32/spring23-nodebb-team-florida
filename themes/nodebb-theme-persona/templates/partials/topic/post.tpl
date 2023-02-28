@@ -76,6 +76,10 @@
     </a>
     {{{ end }}}
 
+    <small class="pull-center" data-endorses="{posts.endorses}">
+        <span class="endorses_{posts.endorses}">{posts.user.username} is endorsed!</span>
+    </small>
+
     <small class="pull-right">
         <!-- IMPORT partials/topic/reactions.tpl -->
         <span class="post-tools">

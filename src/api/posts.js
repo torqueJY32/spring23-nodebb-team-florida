@@ -278,7 +278,7 @@ postsAPI.endorse = async function (caller, data) {
 };
 
 postsAPI.unendorse = async function (caller, data) {
-    return await apiHelpers.postCommand(caller, 'unendorse', 'unendorsed', '', data);
+    return await apiHelpers.postCommand(caller, 'unendorse', 'endorsed', '', data);
 };
 
 async function diffsPrivilegeCheck(pid, uid) {
