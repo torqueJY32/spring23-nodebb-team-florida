@@ -41,22 +41,22 @@ Create some posts with each account to populate the site if there are no current
 
 Navigate to any post on the platform and open the Post Menu indicated by the three vertical dots button in the bottom right of each post.
 
-Once expanded, you should see a newly added button labeled "Endorse and Unendorse".
+Once expanded, you should see a newly added button labeled "Endorse and Unendorse". Note that, at the current stage, all account types (instructors, admin, student) will have access to this button and the endorse functionality for the ease of demostration and testing.
 
-When a post is currently unendorsed, the menu will appear as below:
+When a post is currently unendorsed, the post will have no prompts, and the menu will appear as below:
 ![image](./postmenu_unendorsed.png)
 
-When a post is currently endorsed, the icon will change to a checkmark as below and a text "xxx is endorsed will come up" (please refresh):
+When a post is currently endorsed, the icon will change to a checkmark as below immediately, and a green text saying ""xxx-user" is endorsed" will appear at the bottom of this post (please refresh to reflect this change):
 ![image](./postmenu_endorsed.png)
 
 ### User 2
 
-Using the other account, refresh the page to load these changes. When the Post Menu is reopened, you should see that the icon matches the endorse status that was set by User 1.
+Using the other account, refresh the page to load these changes. When the Post Menu is reopened, you should see that the icon matches the endorse status that was set by User 1, and that the post will have the green text saying this post has been endorsed by the user. This gives a clear visual sign to the user that the post has been endorsed.
 
 ## Testing
 
 Automated tests on the API endpoint have been added to `test/posts.js` found [here](https://github.com/CMU-313/spring23-nodebb-team-florida/blob/main/test/posts.js) in the repository.
 
-In test/posts.js, we are testing whether the endorse button will endorse a post that has not been endorsed yet and whther the endorse button will unendorse a post that is already endorsed. This is tested through two different functions with the labels " should endorse a post" and "should unendorse a post."
+In test/posts.js, we are testing whether the endorse button will endorse a post that has not been endorsed yet and whther the endorse button will unendorse a post that is already endorsed. This is tested through two different functions with the labels "should endorse a post" and "should unendorse a post."
 
-These two tests are sufficient because these are the two possible things that the endorse button can accomplish. The functions just check whether the hasEndorsed constant is true or false in order to determine whether the post has been endorsed or not
+These two tests are sufficient because these are the two possible things that the endorse button can accomplish. The functions just check whether the hasEndorsed constant is true or false in order to determine whether the post has been endorsed or not.
