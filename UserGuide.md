@@ -46,7 +46,7 @@ Once expanded, you should see a newly added button labeled "Endorse and Unendors
 When a post is currently unendorsed, the menu will appear as below:
 ![image](./postmenu_unendorsed.png)
 
-When a post is currently endorsed, the icon will change to a checkmark as below:
+When a post is currently endorsed, the icon will change to a checkmark as below and a text "xxx is endorsed will come up" (please refresh):
 ![image](./postmenu_endorsed.png)
 
 ### User 2
