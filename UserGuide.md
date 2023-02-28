@@ -57,6 +57,6 @@ Using the other account, refresh the page to load these changes. When the Post M
 
 Automated tests on the API endpoint have been added to `test/posts.js` found [here](https://github.com/CMU-313/spring23-nodebb-team-florida/blob/main/test/posts.js) in the repository.
 
-[insert description of what is being tested here]
+In test/posts.js, we are testing whether the endorse button will endorse a post that has not been endorsed yet and whther the endorse button will unendorse a post that is already endorsed. This is tested through two different functions with the labels " should endorse a post" and "should unendorse a post."
 
-[insert why tests are sufficient here]
+These two tests are sufficient because these are the two possible things that the endorse button can accomplish. The functions just check whether the hasEndorsed constant is true or false in order to determine whether the post has been endorsed or not.
