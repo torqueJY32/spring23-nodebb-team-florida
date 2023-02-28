@@ -76,6 +76,17 @@
     </a>
     {{{ end }}}
 
+    <small class="pull-center" data-endorsed="{posts.endorsed}">
+        <span component="post/endorse/off" class="<!-- IF !posts.endorsed -->hidden<!-- ENDIF !posts.endorsed -->">
+            this is not endorsed
+        </span>
+        <span component="post/endorse/on" class="<!-- IF posts.endorsed -->hidden<!-- ENDIF posts.endorsed -->">
+            this is endorsed
+        </span>
+    </small>
+    
+    
+
     <small class="pull-right">
         <!-- IMPORT partials/topic/reactions.tpl -->
         <span class="post-tools">
