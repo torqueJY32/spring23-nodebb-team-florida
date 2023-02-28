@@ -59,4 +59,4 @@ Automated tests on the API endpoint have been added to `test/posts.js` found [he
 
 In test/posts.js, we are testing whether the endorse button will endorse a post that has not been endorsed yet and whther the endorse button will unendorse a post that is already endorsed. This is tested through two different functions with the labels " should endorse a post" and "should unendorse a post."
 
-These two tests are sufficient because these are the two possible things that the endorse button can accomplish. The functions just check whether the hasEndorsed constant is true or false in order to determine whether the post has been endorsed or not.
+These two tests are sufficient because these are the two possible things that the endorse button can accomplish. The functions just check whether the hasEndorsed constant is true or false in order to determine whether the post has been endorsed or not
